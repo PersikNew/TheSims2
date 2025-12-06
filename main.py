@@ -213,7 +213,7 @@ class Job:
         self.gladness_less = job_list[self.job]["gladness_less"]
 
 class Cat:
-    def __init__(self, name="Murz"):
+    def __init__(self, name="Murzik"):
         self.name = name
         self.hunger = 40
         self.mood = 50
