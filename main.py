@@ -1,7 +1,7 @@
 import random
 
 class Human:
-    def __init__(self, name="Human", job=None, home=None, car=None):
+    def __init__(self, name="Human", job=None, home=None, car=None, pet=None):
         self.name = name
         self.money = 100
         self.gladness = 50
@@ -9,6 +9,7 @@ class Human:
         self.job = job
         self.car = car
         self.home = home
+        self.pet = pet
 
     def get_home(self):
         self.home = House()
@@ -23,6 +24,10 @@ class Human:
             self.to_repair()
             return
         self.job = Job(job_list)
+
+    def get_pet(self):
+        self.pet = Cat()
+        print(f"{self.name} now has a cat named {self.pet.name}")
 
     def eat(self):
         if self.home.food <= 0:
@@ -112,9 +117,20 @@ class Human:
             return False
         return True
 
+    def care_pet(self):
+        if self.pet.hunger < 30:
+            print("Feeding the cat")
+            self.pet.eat()
+        else:
+            print("Playing with the cat")
+            self.pet.play()
+            self.gladness += 5
+
     def live(self, day):
         if not self.is_alive():
             return False
+        if self.pet is None:
+            self.get_pet()
         if self.home is None:
             print("Settled in the house")
             self.get_home()
@@ -195,6 +211,24 @@ class Job:
         self.job = random.choice(list(job_list))
         self.salary = job_list[self.job]["salary"]
         self.gladness_less = job_list[self.job]["gladness_less"]
+
+class Cat:
+    def __init__(self, name="Murz"):
+        self.name = name
+        self.hunger = 40
+        self.mood = 50
+
+    def eat(self):
+        self.hunger += 10
+        if self.hunger > 100:
+            self.hunger = 100
+
+    def play(self):
+        self.mood += 15
+        if self.mood > 100:
+            self.mood = 100
+        self.hunger -= 5
+
 
 nick = Human(name="Nick")
 for day in range(1, 8):
